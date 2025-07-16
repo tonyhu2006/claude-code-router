@@ -1,6 +1,7 @@
 import { MessageCreateParamsBase } from "@anthropic-ai/sdk/resources/messages";
 import { get_encoding } from "tiktoken";
 import { log } from "./log";
+import { cleanGeminiToolsSchema } from "./geminiSchemaTransformer";
 
 const enc = get_encoding("cl100k_base");
 
@@ -79,6 +80,14 @@ export const router = async (req: any, res: any, config: any) => {
     }
     const model = getUseModel(req, tokenCount, config);
     req.body.model = model;
+    
+    // 如果使用 Gemini 相关的提供商，清理工具 schema
+    if (model && typeof model === 'string' && model.includes('gemini')) {
+      if (req.body.tools && Array.isArray(req.body.tools)) {
+        req.body.tools = cleanGeminiToolsSchema(req.body.tools);
+        log("Cleaned Gemini tools schema for model:", model);
+      }
+    }
   } catch (error: any) {
     log("Error in router middleware:", error.message);
     req.body.model = config.Router!.default;
