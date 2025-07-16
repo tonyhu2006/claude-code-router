@@ -46,6 +46,7 @@ if (model && typeof model === 'string' && model.includes('gemini')) {
   }
 }
 ```
+```
 
 ### 3. 配置使用
 
