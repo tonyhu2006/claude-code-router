@@ -1,0 +1,39 @@
+{
+  "log": true,
+  "Providers": [
+    {
+      "name": "deepseek",
+      "api_base_url": "https://api.deepseek.com",
+      "api_key": "your-deepseek-api-key",
+      "models": ["deepseek-chat", "deepseek-reasoner"]
+    },
+    {
+      "name": "gemini-balance",
+      "api_base_url": "http://84.8.145.89:8000/v1",
+      "api_key": "Hjd-961207hjd",
+      "models": [
+        "gemini-1.5-flash",
+        "gemini-1.5-pro", 
+        "gemini-2.0-flash-exp",
+        "gemini-1.5-flash-search",
+        "gemini-2.0-flash-exp-image"
+      ],
+      "headers": {
+        "Authorization": "Bearer Hjd-961207hjd",
+        "Content-Type": "application/json"
+      }
+    },
+    {
+      "name": "ollama",
+      "api_base_url": "http://localhost:11434/v1",
+      "api_key": "ollama",
+      "models": ["qwen2.5-coder:latest"]
+    }
+  ],
+  "Router": {
+    "default": "deepseek,deepseek-chat",
+    "background": "ollama,qwen2.5-coder:latest", 
+    "think": "deepseek,deepseek-reasoner",
+    "longContext": "gemini-balance,gemini-1.5-pro"
+  }
+}
